@@ -8,17 +8,17 @@ GIT_BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
 BUILD_DATE = $(shell date +'%F_%T_%Z')
 BUILD_TOOL = go_build
 BUILD_ARGS = -s -w
-LDFLAGS += -X github.com/devops-toolbox/msrvct/cmd._Name_=${APP_NAME}
-LDFLAGS += -X github.com/devops-toolbox/msrvct/cmd._Version_=${VERSION}
-LDFLAGS += -X github.com/devops-toolbox/msrvct/cmd._GitCommit_=${GIT_COMMIT}
-LDFLAGS += -X github.com/devops-toolbox/msrvct/cmd._GitBranch_=${GIT_BRANCH}
-LDFLAGS += -X github.com/devops-toolbox/msrvct/cmd._BuildDate_=${BUILD_DATE}
-LDFLAGS += -X github.com/devops-toolbox/msrvct/cmd._BuildTool_=${BUILD_TOOL}
+LDFLAGS += -X github.com/devops-toolbox/msrvct-exec/cmd._Name_=${APP_NAME}
+LDFLAGS += -X github.com/devops-toolbox/msrvct-exec/cmd._Version_=${VERSION}
+LDFLAGS += -X github.com/devops-toolbox/msrvct-exec/cmd._GitCommit_=${GIT_COMMIT}
+LDFLAGS += -X github.com/devops-toolbox/msrvct-exec/cmd._GitBranch_=${GIT_BRANCH}
+LDFLAGS += -X github.com/devops-toolbox/msrvct-exec/cmd._BuildDate_=${BUILD_DATE}
+LDFLAGS += -X github.com/devops-toolbox/msrvct-exec/cmd._BuildTool_=${BUILD_TOOL}
 
 # PATH
 BUILD_DIR="build"
 
-.PHONY: default help debug build build_all build_darwin build_linux build_windows build_linux_amd64 build_linux_arm64 build_darwin_amd64 build_darwin_arm64 build_windows_amd64 build_windows_arm64
+.PHONY: default help debug build build_all build_darwin build_linux build_windows build_linux_amd64 build_linux_arm64 build_darwin_amd64 build_darwin_arm64 build_windows_amd64 build_windows_arm64 clean_version clean
 
 
 default: help
@@ -29,18 +29,18 @@ help:
 	@echo "  build : Build the binary of this project for all platform"
 
 debug:
-	echo "debug"
+	echo $(APP_NAME)
 tidy:
 	@go mod tidy
-build: tidy
+build: clean tidy
 	@CGO_ENABLED=0 go build -ldflags '$(BUILD_ARGS) $(LDFLAGS)' -o ${BUILD_DIR}/${APP_NAME}
-build_all: build_linux build_darwin build_windows
+build_all: clean tidy _build_linux _build_darwin _build_windows
 	@echo "build_all completed"
-build_linux: clean tidy _build_linux_amd64 _build_linux_arm64
+build_linux: clean tidy _build_linux
 	@echo "build_linux completed"
-build_darwin: clean tidy _build_darwin_amd64 _build_darwin_arm64
+build_darwin: clean tidy _build_darwin
 	@echo "build_darwin completed"
-build_windows: clean tidy _build_windows_amd64 _build_windows_arm64
+build_windows: clean tidy _build_windows
 	@echo "build_windows completed"
 build_linux_amd64: clean tidy _build_linux_amd64
 	@echo "build_linux_amd64 completed"
