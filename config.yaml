@@ -1,0 +1,24 @@
+common:
+  file: msrvct.yaml
+  path: /etc/msrvct
+script:
+  pre_scripts:
+    - pre.sh
+  post_scripts:
+    - post.sh
+variables:
+  # 调试模式，指定工作目录
+  # src: /workspaces/msrvct-exec/debug/golang/1.20.12
+packages:
+  - name: golang
+    version: 1.20.12
+    documents:
+      - name: go1.20.12.linux-amd64.tar.gz
+        type: pkg
+        path_mode: 0755
+        file_mode: 0755
+      - name: golang.env
+        type: env
+        template: true
+        path_mode: 0755
+        file_mode: 0755

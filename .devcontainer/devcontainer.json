@@ -1,0 +1,19 @@
+{
+	"name": "Go",
+	"image": "mcr.microsoft.com/devcontainers/go:1-1.21-bullseye",
+	"postCreateCommand": "go env -w GOPROXY=https://goproxy.cn,direct",
+	"remoteUser": "root",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"tooltitudeteam.tooltitude",
+				"golang.go",
+				"seatonjiang.gitmoji-vscode",
+				"eamodio.gitlens",
+				"GitHub.copilot",
+				"mkxml.vscode-filesize",
+				"redhat.vscode-yaml"
+			]
+		}
+	}
+}
