@@ -6,9 +6,18 @@ import (
 )
 
 func ReadConfig() (err error) {
-
 	cc := config.NewConfig(global.DefaultConfigPath, global.DefaultConfigFile)
 	err = cc.ReadConfig()
+	if err != nil {
+		return err
+	}
+	// log.Println(global.RuntimeVariableMap)
+	err = config.HandleRuntimeVariable()
+	if err != nil {
+		return err
+	}
+	// log.Println(global.RuntimeVariableMap)
+	err = config.ReadCommonConfig()
 	if err != nil {
 		return err
 	}
@@ -16,14 +25,5 @@ func ReadConfig() (err error) {
 	if err != nil {
 		return err
 	}
-	err = config.ReadCommonConfig(global.Config.Common.File, global.Config.Common.Path)
-	if err != nil {
-		return err
-	}
-	err = config.HandleRuntimeVariable()
-	if err != nil {
-		return err
-	}
-	// log.Println(global.RuntimeVariableMap)
 	return nil
 }

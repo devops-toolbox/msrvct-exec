@@ -20,6 +20,8 @@ func NewInstallCommand() *cobra.Command {
 		Long:  "install",
 		RunE:  InstallRun,
 	}
+	cmd.Flags().StringP("config", "c", "", "Set config file")
+	viper.BindPFlag("config", cmd.Flags().Lookup("config"))
 	cmd.Flags().StringSliceP("env", "e", []string{}, "Set environment variables")
 	viper.BindPFlag("env", cmd.Flags().Lookup("env"))
 	return cmd

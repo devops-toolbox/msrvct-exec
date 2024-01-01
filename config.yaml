@@ -1,22 +1,25 @@
+# name: golang
+# version: 1.21.5
 common:
   file: msrvct.yaml
   path: /etc/msrvct
-script:
-  pre_scripts:
-    - pre.sh
-  post_scripts:
-    - post.sh
+scripts:
+  pre_script:
+    - pre_script.sh
+  post_script:
+    - post_script.sh
 variables:
-  # 调试模式，指定工作目录
-  # src: /workspaces/msrvct-exec/debug/golang/1.20.12
+  # global
+  # src: /workspaces/msrvct-exec/debug/golang/1.21.5
 packages:
   - name: golang
-    version: 1.20.12
+    version: 1.21.5
     documents:
-      - name: go1.20.12.linux-amd64.tar.gz
+      - name: go1.21.5.linux-amd64.tar.gz
         type: pkg
         path_mode: 0755
         file_mode: 0755
+        sub_dir: go
       - name: golang.env
         type: env
         template: true

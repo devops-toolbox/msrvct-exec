@@ -22,38 +22,45 @@ func NewConfig(path, file string) *Config {
 	}
 }
 func (c *Config) ReadConfig() (err error) {
-	file := c.File
-	if c.File == "" {
-		file = global.DefaultConfigFile
+	if viper.GetString("config") != "" {
+		viper.SetConfigFile(viper.GetString("config"))
+	} else {
+		file := c.File
+		if c.File == "" {
+			file = global.DefaultConfigFile
+		}
+		path := file
+		if c.Path != "" {
+			path = filepath.Join(c.Path, file)
+		}
+		viper.SetConfigFile(path)
 	}
-	path := file
-	if c.Path != "" {
-		path = filepath.Join(c.Path, file)
-	}
-	viper.SetConfigFile(path)
 	err = viper.ReadInConfig()
 	if err != nil {
 		return err
 	}
 	err = viper.Unmarshal(global.Config)
-	global.RuntimeVariableMap = global.Config.Variables
+	for k, v := range global.Config.Variables {
+		global.RuntimeVariableMap[k] = v
+	}
+	// global.RuntimeVariableMap = global.Config.Variables
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func ReadCommonConfig(file, path string) (err error) {
-
+func ReadCommonConfig() (err error) {
+	file := global.Config.Common.File
+	path := global.Config.Common.Path
 	if file == "" {
-		file = global.DefaultConfigFile
+		file = global.DefaultCommonConfigFile
 	}
-	if path != "" {
-		path = filepath.Join(path, file)
-	} else {
-		path = file
+	if path == "" {
+		path = global.DefaultCommonConfigPath
 	}
-	viper.SetConfigFile(path)
+	config := filepath.Join(path, file)
+	viper.SetConfigFile(config)
 	err = viper.ReadInConfig()
 	if err != nil {
 		return err
@@ -100,5 +107,6 @@ func HandleDefaultVariable() (err error) {
 			global.RuntimeVariableMap[k] = v
 		}
 	}
+	global.DefaultConfigPath = global.RuntimeVariableMap["src"]
 	return nil
 }
