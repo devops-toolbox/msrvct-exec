@@ -94,6 +94,8 @@ func HandleDefaultVariable() (err error) {
 	config["dst_pkg_dir"] = "pkg"
 	config["dst_tmp_dir"] = "tmp"
 	config["dst_env_dir"] = "env"
+	config["dst_bin_dir"] = "bin"
+	config["dst_res_dir"] = "res"
 	config["glo_tpl_fix"] = "tpl"
 	config["glo_dir_per"] = "0755"
 	config["glo_doc_per"] = "0644"

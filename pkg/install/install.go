@@ -211,18 +211,18 @@ func HandleEnvironment(p model.Package, f model.Document) (err error) {
 		log.Println(err)
 		return err
 	}
-	dstLinkPath := filepath.Join(global.RuntimeVariableMap["dst"], global.RuntimeVariableMap["dst_env_dir"])
-	err = MakeDirAll(dstLinkPath, global.RuntimeVariableMap["glo_dir_per"])
-	if err != nil {
-		log.Println(err)
-		return err
-	}
-	dstLinkFile := filepath.Join(dstLinkPath, f.Name)
-	err = SymlinkCover(dstFile, dstLinkFile)
-	if err != nil {
-		log.Println(err)
-		return err
-	}
+	// dstLinkPath := filepath.Join(global.RuntimeVariableMap["dst"], global.RuntimeVariableMap["dst_env_dir"])
+	// err = MakeDirAll(dstLinkPath, global.RuntimeVariableMap["glo_dir_per"])
+	// if err != nil {
+	// 	log.Println(err)
+	// 	return err
+	// }
+	// dstLinkFile := filepath.Join(dstLinkPath, f.Name)
+	// err = SymlinkCover(dstFile, dstLinkFile)
+	// if err != nil {
+	// 	log.Println(err)
+	// 	return err
+	// }
 	return nil
 }
 func CopyFile(src, dst string) (err error) {

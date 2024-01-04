@@ -17,10 +17,10 @@ func ReadConfig() (err error) {
 		return err
 	}
 	// log.Println(global.RuntimeVariableMap)
-	err = config.ReadCommonConfig()
-	if err != nil {
-		return err
-	}
+	// err = config.ReadCommonConfig()
+	// if err != nil {
+	// 	return err
+	// }
 	err = config.HandleDefaultVariable()
 	if err != nil {
 		return err
